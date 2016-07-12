@@ -53,7 +53,7 @@ namespace SeleniumTests
             // ERROR: Caught exception [Error: locator strategy either id or name must be specified explicitly.]
             driver.Navigate().GoToUrl(baseURL + "/Domestic/New");
             driver.FindElement(By.Id("Input_BnName-Search")).Click(); Thread.Sleep(1000);
-            driver.FindElement(By.Id("gvDomesticPartnerSearch_tccell0_3")).Click();
+            driver.FindElement(By.Id("gvDomesticPartnerSearch_tccell0_3")).Click(); Thread.Sleep(1000);
             driver.FindElement(By.Id("Input_Details")).Clear();
             driver.FindElement(By.Id("Input_Details")).SendKeys("automaticTest");
             driver.FindElement(By.Id("Input_ExtRef")).Clear();
