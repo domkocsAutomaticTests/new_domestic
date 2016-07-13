@@ -215,6 +215,7 @@ namespace SeleniumTests
         }
 
         /* CANNOT BE DONE AT VERSION 1.1.1481.0 !!!
+         * (unfinished)
         [Test]
         public void TaxTest()
         {
