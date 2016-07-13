@@ -71,6 +71,17 @@ namespace SeleniumTests
                 driver.Navigate().GoToUrl(baseURL + "/Home/Dashboard");
             }
             Thread.Sleep(1000);
+
+            try
+            {
+                Assert.AreEqual("CAlink", driver.FindElement(By.TagName("title")).Text);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
             try
             {
                 Assert.AreEqual((dom + 1).ToString(), driver.FindElement(By.XPath(".//*[@id='main']/div[5]/div[2]/div/div/div/table/tbody/tr[1]/td[2]")).Text);
