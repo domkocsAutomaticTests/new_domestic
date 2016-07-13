@@ -16,7 +16,7 @@ namespace SeleniumTests
         private StringBuilder verificationErrors;
         private string baseURL;
         private bool acceptNextAlert = true;
-        private int dom = 0, sep = 0, swi = 0,zus = 0, tax = 0;
+        private int dom = 0, sep = 0, swi = 0, zus = 0; //, tax = 0;
 
         [SetUp]
         public void SetupTest()
