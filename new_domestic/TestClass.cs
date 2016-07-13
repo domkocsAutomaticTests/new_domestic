@@ -16,13 +16,13 @@ namespace SeleniumTests
         private StringBuilder verificationErrors;
         private string baseURL;
         private bool acceptNextAlert = true;
-        private int dom = 0;
+        private int dom = 0, sep = 0;
 
         [SetUp]
         public void SetupTest()
         {
             driver = new FirefoxDriver();
-            baseURL = "https://clicpltest.egroup.hu/";
+            baseURL = @"https://clicpltest.egroup.hu";
             verificationErrors = new StringBuilder();
         }
 
@@ -41,7 +41,50 @@ namespace SeleniumTests
         }
 
         [Test]
-        public void TheNewDomesticTest()
+        public void SepaTest()
+        {
+            driver.Navigate().GoToUrl(baseURL + "/Login/Login");
+            driver.FindElement(By.LinkText("Login with RSA token [DEMO]")).Click();
+            driver.FindElement(By.Id("loginId")).Clear();
+            driver.FindElement(By.Id("loginId")).SendKeys("100003");
+            driver.FindElement(By.Id("login")).Click();
+            driver.FindElement(By.Id("submit")).Click();
+            sep = int.Parse(driver.FindElement(By.XPath(".//*[@id='main']/div[5]/div[2]/div/div/div/table/tbody/tr[2]/td[2]")).Text);
+            // ERROR: Caught exception [Error: locator strategy either id or name must be specified explicitly.]
+            driver.Navigate().GoToUrl(baseURL + "/Sepa/New");
+            driver.FindElement(By.Id("Input_BnName-Search")).Click(); Thread.Sleep(1000);
+            driver.FindElement(By.Id("gvForeignPartnerSearch_DXDataRow17")).Click(); Thread.Sleep(1000);
+            driver.FindElement(By.Id("Input_Details")).Clear();
+            driver.FindElement(By.Id("Input_Details")).SendKeys("automaticTest");
+            driver.FindElement(By.Id("Input_ExtRef")).Clear();
+            driver.FindElement(By.Id("Input_ExtRef")).SendKeys("automaticTest");
+            //new SelectElement(driver.FindElement(By.Id("Input_CountryId"))).SelectByText("GERMANY");
+            driver.FindElement(By.Id("Input_Amount_formatted")).Clear();
+            driver.FindElement(By.Id("Input_Amount_formatted")).SendKeys("1000,00");
+            driver.FindElement(By.Id("actionButton_Save")).Click();
+            try
+            {
+                driver.FindElement(By.Id("actionButton_Save")).Click();
+                Thread.Sleep(1000);
+                driver.Navigate().GoToUrl(baseURL + "/Home/Dashboard");
+            }
+            catch (Exception)
+            {
+                driver.Navigate().GoToUrl(baseURL + "/Home/Dashboard");
+            }
+            Thread.Sleep(1000);
+            try
+            {
+                Assert.AreEqual((sep + 1).ToString(), driver.FindElement(By.XPath(".//*[@id='main']/div[5]/div[2]/div/div/div/table/tbody/tr[2]/td[2]")).Text);
+            }
+            catch (AssertionException e)
+            {
+                verificationErrors.Append(e.Message);
+            }
+        }
+
+        [Test]
+        public void DomesticTest()
         {
             driver.Navigate().GoToUrl(baseURL + "/Login/Login");
             driver.FindElement(By.LinkText("Login with RSA token [DEMO]")).Click();
@@ -60,28 +103,18 @@ namespace SeleniumTests
             driver.FindElement(By.Id("Input_ExtRef")).SendKeys("automaticTest");
             driver.FindElement(By.Id("Input_Amount_formatted")).Clear();
             driver.FindElement(By.Id("Input_Amount_formatted")).SendKeys("1000,00");
+            driver.FindElement(By.Id("actionButton_Save")).Click();
             try
             {
                 driver.FindElement(By.Id("actionButton_Save")).Click();
+                Thread.Sleep(1000);
                 driver.Navigate().GoToUrl(baseURL + "/Home/Dashboard");
             }
             catch (Exception)
             {
-                driver.FindElement(By.Id("actionButton_Save")).Click();
                 driver.Navigate().GoToUrl(baseURL + "/Home/Dashboard");
             }
             Thread.Sleep(1000);
-
-            try
-            {
-                Assert.AreEqual("CAlink", driver.FindElement(By.TagName("title")).Text);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
             try
             {
                 Assert.AreEqual((dom + 1).ToString(), driver.FindElement(By.XPath(".//*[@id='main']/div[5]/div[2]/div/div/div/table/tbody/tr[1]/td[2]")).Text);
