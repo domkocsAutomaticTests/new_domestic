@@ -49,11 +49,15 @@ namespace SeleniumTests
             driver.FindElement(By.Id("loginId")).Clear();
             driver.FindElement(By.Id("loginId")).SendKeys("100003");
             driver.FindElement(By.Id("login")).Click();
-            driver.FindElement(By.Id("submit")).Click();
+            try
+            {
+                driver.FindElement(By.Id("submit")).Click();
+            }
+            catch { }
             dom = int.Parse(driver.FindElement(By.XPath(".//*[@id='main']/div[5]/div[2]/div/div/div/table/tbody/tr[1]/td[2]")).Text);
             // ERROR: Caught exception [Error: locator strategy either id or name must be specified explicitly.]
             driver.Navigate().GoToUrl(baseURL + "/Domestic/New");
-            driver.FindElement(By.Id("Input_BnName-Search")).Click(); Thread.Sleep(1000);
+            driver.FindElement(By.Id("Input_BnName-Search")).Click(); Thread.Sleep(3000);
             driver.FindElement(By.Id("gvDomesticPartnerSearch_tccell0_3")).Click(); Thread.Sleep(1000);
             driver.FindElement(By.Id("Input_Details")).Clear();
             driver.FindElement(By.Id("Input_Details")).SendKeys("automaticTest");
@@ -93,11 +97,15 @@ namespace SeleniumTests
             driver.FindElement(By.Id("loginId")).Clear();
             driver.FindElement(By.Id("loginId")).SendKeys("100003");
             driver.FindElement(By.Id("login")).Click();
-            driver.FindElement(By.Id("submit")).Click();
+            try
+            {
+                driver.FindElement(By.Id("submit")).Click();
+            }
+            catch { }
             sep = int.Parse(driver.FindElement(By.XPath(".//*[@id='main']/div[5]/div[2]/div/div/div/table/tbody/tr[2]/td[2]")).Text);
             // ERROR: Caught exception [Error: locator strategy either id or name must be specified explicitly.]
             driver.Navigate().GoToUrl(baseURL + "/Sepa/New");
-            driver.FindElement(By.Id("Input_BnName-Search")).Click(); Thread.Sleep(1000);
+            driver.FindElement(By.Id("Input_BnName-Search")).Click(); Thread.Sleep(3000);
             driver.FindElement(By.Id("gvForeignPartnerSearch_DXDataRow17")).Click(); Thread.Sleep(1000);
             driver.FindElement(By.Id("Input_Details")).Clear();
             driver.FindElement(By.Id("Input_Details")).SendKeys("automaticTest");
@@ -135,11 +143,15 @@ namespace SeleniumTests
             driver.FindElement(By.Id("loginId")).Clear();
             driver.FindElement(By.Id("loginId")).SendKeys("100003");
             driver.FindElement(By.Id("login")).Click();
-            driver.FindElement(By.Id("submit")).Click();
+            try
+            {
+                driver.FindElement(By.Id("submit")).Click();
+            }
+            catch { }
             swi = int.Parse(driver.FindElement(By.XPath(".//*[@id='main']/div[5]/div[2]/div/div/div/table/tbody/tr[3]/td[2]")).Text);
             // ERROR: Caught exception [Error: locator strategy either id or name must be specified explicitly.]
             driver.Navigate().GoToUrl(baseURL + "/Swift/New");
-            driver.FindElement(By.Id("Input_BnName-Search")).Click(); Thread.Sleep(1000);
+            driver.FindElement(By.Id("Input_BnName-Search")).Click(); Thread.Sleep(3000);
             driver.FindElement(By.Id("gvForeignPartnerSearch_DXDataRow14")).Click(); Thread.Sleep(1000);
             driver.FindElement(By.Id("Input_Details")).Clear();
             driver.FindElement(By.Id("Input_Details")).SendKeys("automaticTest");
@@ -177,7 +189,11 @@ namespace SeleniumTests
             driver.FindElement(By.Id("loginId")).Clear();
             driver.FindElement(By.Id("loginId")).SendKeys("100003");
             driver.FindElement(By.Id("login")).Click();
-            driver.FindElement(By.Id("submit")).Click();
+            try
+            {
+                driver.FindElement(By.Id("submit")).Click();
+            }
+            catch { }
             zus = int.Parse(driver.FindElement(By.XPath(".//*[@id='main']/div[5]/div[2]/div/div/div/table/tbody/tr[4]/td[2]")).Text);
             // ERROR: Caught exception [Error: locator strategy either id or name must be specified explicitly.]
             driver.Navigate().GoToUrl(baseURL + "/DomesticZus/New");
@@ -185,8 +201,35 @@ namespace SeleniumTests
             driver.FindElement(By.Id("Input_Amount_formatted")).SendKeys("1000,00");
             driver.FindElement(By.Id("Input_DecisionAgreement")).Clear();
             driver.FindElement(By.Id("Input_DecisionAgreement")).SendKeys("40");
-            driver.FindElement(By.Id("Input_DeclarationDate")).Clear();
-            driver.FindElement(By.Id("Input_DeclarationDate")).SendKeys("201610");
+            DateTime datum = DateTime.Today;
+            datum.ToString().ToCharArray();
+            char[] tomb = new char[6];
+            /*for (int i = 0; i < datum.ToString().ToCharArray().Length; i++)
+            {
+                driver.FindElement(By.Id("Input_PayerSupplementaryIdNumber")).SendKeys((datum.ToString().ToCharArray()[i]).ToString());
+            }*/
+            int szam = 0;
+            for (int i = 0; i < 8; i++)
+            {
+                if (i == 4)
+                {
+                    i=6;
+                }
+                string id = "zusDate"+((szam + 1).ToString());
+                driver.FindElement(By.Id(id)).SendKeys((datum.ToString().ToCharArray()[i]).ToString());
+                szam++;
+            }
+
+
+
+            /*tomb = datum.ToString().Split(tomb.ToCharArray(),
+                                      StringSplitOptions.RemoveEmptyEntries);
+            object[] list = new object[tomb.Length];
+
+            for (int i = 0; i < tomb.Length; i++)
+            {
+                list[i] = Convert.ChangeType(tomb[i], type);
+            {*/
             driver.FindElement(By.Id("Input_DeclarationNumber")).Clear();
             driver.FindElement(By.Id("Input_DeclarationNumber")).SendKeys("40");
 
@@ -224,7 +267,11 @@ namespace SeleniumTests
             driver.FindElement(By.Id("loginId")).Clear();
             driver.FindElement(By.Id("loginId")).SendKeys("100003");
             driver.FindElement(By.Id("login")).Click();
-            driver.FindElement(By.Id("submit")).Click();
+            try
+            {
+                driver.FindElement(By.Id("submit")).Click();
+            }
+            catch { }
             tax = int.Parse(driver.FindElement(By.XPath(".//*[@id='main']/div[5]/div[2]/div/div/div/table/tbody/tr[5]/td[2]")).Text);
             // ERROR: Caught exception [Error: locator strategy either id or name must be specified explicitly.]
             driver.Navigate().GoToUrl(baseURL + "/DomesticTax/New");
