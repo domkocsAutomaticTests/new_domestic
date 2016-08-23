@@ -258,7 +258,7 @@ namespace SeleniumTests
         }
 
         /* CANNOT BE DONE AT VERSION 1.1.1481.0 !!!
-         * (finished but save not working)
+         * (finished but save not working)*/
         [Test]
         public void TaxTest()
         {
@@ -286,6 +286,8 @@ namespace SeleniumTests
 
             new SelectElement(driver.FindElement(By.Id("Input_BnAccount"))).SelectByText("42101010780024112227000000 - Other");
             //driver.FindElement(By.CssSelector("option[value=\"42101010780024112227000000\"]")).Click();
+            driver.FindElement(By.Id("Input_LiabilityIdentification")).Clear();
+            driver.FindElement(By.Id("Input_LiabilityIdentification")).SendKeys("YXN083441");
 
             driver.FindElement(By.Id("actionButton_Save")).Click();
             try
@@ -308,7 +310,7 @@ namespace SeleniumTests
                 verificationErrors.Append(e.Message);
             }
         }
-        */
+        /**/
 
         private bool IsElementPresent(By by)
         {
