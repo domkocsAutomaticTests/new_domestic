@@ -258,10 +258,11 @@ namespace SeleniumTests
         }
 
         /* CANNOT BE DONE AT VERSION 1.1.1481.0 !!!
-         * (unfinished)
+         * (finished but save not working)
         [Test]
         public void TaxTest()
         {
+            int tax = 0;
             driver.Navigate().GoToUrl(baseURL + "/Login/Login");
             driver.FindElement(By.LinkText("Login with RSA token [DEMO]")).Click();
             driver.FindElement(By.Id("loginId")).Clear();
@@ -275,13 +276,16 @@ namespace SeleniumTests
             tax = int.Parse(driver.FindElement(By.XPath(".//*[@id='main']/div[5]/div[2]/div/div/div/table/tbody/tr[5]/td[2]")).Text);
             // ERROR: Caught exception [Error: locator strategy either id or name must be specified explicitly.]
             driver.Navigate().GoToUrl(baseURL + "/DomesticTax/New");
+            driver.FindElement(By.Id("dk1-Input_BnAddressBnName")).Click();
+            driver.FindElement(By.Id("dk1-Aleksandrów-Kujawski - Urząd Skarbowy")).Click();
             new SelectElement(driver.FindElement(By.Id("Input_BnAddressBnName"))).SelectByText("Aleksandrów Kujawski - Urząd Skarbowy");
             driver.FindElement(By.Id("Input_Amount_formatted")).Clear();
             driver.FindElement(By.Id("Input_Amount_formatted")).SendKeys("1000,00");
 
-            
 
-            driver.FindElement(By.Id("Input_PayerSupplementaryIdNumber")).SendKeys("YXN083441");
+
+            new SelectElement(driver.FindElement(By.Id("Input_BnAccount"))).SelectByText("42101010780024112227000000 - Other");
+            //driver.FindElement(By.CssSelector("option[value=\"42101010780024112227000000\"]")).Click();
 
             driver.FindElement(By.Id("actionButton_Save")).Click();
             try
@@ -297,7 +301,7 @@ namespace SeleniumTests
             Thread.Sleep(1000);
             try
             {
-                Assert.AreEqual((tax + 1).ToString(), driver.FindElement(By.XPath(".//*[@id='main']/div[5]/div[2]/div/div/div/table/tbody/tr[5]/td[2]]")).Text);
+                Assert.AreEqual((tax + 1).ToString(), driver.FindElement(By.XPath(".//*[@id='main']/div[5]/div[2]/div/div/div/table/tbody/tr[5]/td[2]")).Text);
             }
             catch (AssertionException e)
             {
