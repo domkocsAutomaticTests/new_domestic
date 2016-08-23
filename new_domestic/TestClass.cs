@@ -16,7 +16,7 @@ namespace SeleniumTests
         private StringBuilder verificationErrors;
         private string baseURL;
         private bool acceptNextAlert = true;
-        private int dom = 0, sep = 0, swi = 0, zus = 0; //, tax = 0;
+        private int dom = 0, sep = 0, swi = 0, zus = 0, tax = 0;
 
         [SetUp]
         public void SetupTest()
@@ -262,7 +262,6 @@ namespace SeleniumTests
         [Test]
         public void TaxTest()
         {
-            int tax = 0;
             driver.Navigate().GoToUrl(baseURL + "/Login/Login");
             driver.FindElement(By.LinkText("Login with RSA token [DEMO]")).Click();
             driver.FindElement(By.Id("loginId")).Clear();
